@@ -6,7 +6,7 @@
 /*   By: scootergui <scootergui@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 21:33:55 by scootergui        #+#    #+#             */
-/*   Updated: 2025/11/10 17:31:48 by scootergui       ###   ########.fr       */
+/*   Updated: 2025/11/14 18:03:28 by scootergui       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@
 # include <readline/history.h>
 
 typedef enum e_token_type {
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_HEREDOC
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	HEREDOC,
+	APPEND
 } t_token_type;
 
 typedef struct s_token {
@@ -36,10 +37,22 @@ typedef struct s_token {
 	struct s_token *next;
 } t_token;
 
+//parsing.c
+void print_tokens(t_token *list);
 
+//lexer.c
+t_token	*ft_newtoken(t_token_type type, char *value);
+void	ft_addtoken(t_token **list, t_token *new);
+void	free_tokens(t_token *list);
+t_token	*ft_lexer(char *input); //testar
+
+//signs.c
 void	setup_signals(void);
 
-//utils.c
+//utils_lexer.c
 int ft_isspace(int space);
+int				ft_isoperator(char c);
+t_token_type	get_operator(char *str, int i);
+char			*read_word(char *s, int *i); //Testar
 
 #endif
